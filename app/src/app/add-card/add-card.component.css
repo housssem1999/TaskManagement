@@ -1,0 +1,15 @@
+.card{
+    width: 100%;
+    height: 150px;
+    border-radius: 5px;
+    border: 2px 2px solid grey;
+    background-color: white;
+}
+.card_content{
+    display: flex;
+    flex-direction: column;
+    background-color: beige;
+    height: 80%;
+    align-items: center;
+    justify-content: center;
+}

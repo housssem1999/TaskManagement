@@ -1,0 +1,9 @@
+
+<div class="register-form">
+	<h1>Register Form</h1>
+	<form (ngSubmit)="onsubmit()" name="form" #f="ngForm" novalidate>
+		<input type="text" [(ngModel)]="form.username" #username="ngModel" name="username" placeholder="Username" required>
+		<input type="password"  [(ngModel)]="form.password" #password="ngModel"name="password" placeholder="Password" required>
+		<button class="btn" ></button>
+	</form>
+</div>

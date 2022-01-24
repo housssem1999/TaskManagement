@@ -1,0 +1,24 @@
+<form novalidate [formGroup]="form" (ngSubmit)="submit()">
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Titre</label>
+      <input type="text" class="form-control" formControlName="titre" placeholder="titre" required>
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Description</label>
+        <input type="text" class="form-control" formControlName="description" placeholder="description" required >
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Priorite</label>
+        <input type="text" class="form-control" formControlName="priorite"placeholder="priorite" required>
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Etat</label>
+        <input type="text" class="form-control" formControlName="etat" placeholder="etat" required>
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Categorie</label>
+        <input type="text" class="form-control" formControlName="categorie"placeholder="categorie" required><br>
+    </div>
+    <button type="submit" [disabled]="!form.valid" class="btn btn-outline-primary" (click)="submit()" >Submit</button>
+    <button type="button" class="btn btn-outline-primary"(click)="cancel()">Cancel</button>
+  </form>

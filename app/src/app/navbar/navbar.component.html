@@ -1,0 +1,47 @@
+<nav class="navbar navbar-expand navbar-dark bg-dark">
+    <a href="#" class="navbar-brand">MiniProjet</a>
+    <ul class="navbar-nav mr-auto" routerLinkActive="active">
+      <li class="nav-item">
+        <a href="/home" class="nav-link" [ngClass]="{'active': active=='home'}"
+        (click)='SetActive("home")' routerLink="home">Home </a>
+      </li>
+     
+    </ul>
+<ul class="navbar navbar-expand navbar-dark bg-dark"> <li class="nav-item">
+    <a href="#" class="nav-link" [ngClass]="{'active': active=='search'}"
+    (click)='SetActive("search")' ></a>
+    <div class="input-group rounded">
+        <input type="text" class="form-control rounded" placeholder="Search" aria-label="Search"
+        aria-describedby="search-addon" />
+        <span class="input-group-text border-0" id="search-addon">
+          <i class="fas fa-search" (click)="search()"></i>
+        </span>
+      </div>
+  </li></ul>
+    <ul class="navbar-nav ml-auto" *ngIf="!isLoggedIn">
+      <li class="nav-item">
+        <a href="/signup" class="nav-link"  
+        [ngClass]="{'active': active=='signup'}" 
+        routerLink="signup"
+        (click)='SetActive("signup")'>Sign Up</a>
+      </li>
+      <li class="nav-item">
+        <a href="/login" class="nav-link" 
+        [ngClass]="{'active': active=='login'}" 
+        routerLink="login"
+        (click)='SetActive("login")'>Login</a>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
+      <li class="nav-item">
+        <a href='#' class="nav-link" 
+        [ngClass]="{'active': active=='profile'}" 
+        (click)='SetActive("profile")'>Profile</a>
+      </li>
+      <li class="nav-item">
+        <a href class="nav-link" (click)="logout()">LogOut</a>
+      </li>
+    </ul>
+  </nav>
+<br>

@@ -1,0 +1,16 @@
+<app-navbar [isLoggedIn]=""></app-navbar>
+<div class="all">
+    <div class="right_side">
+        <ul class="list-group list-group-flush" >
+            <li class="list-group-item"*ngFor='let user of users'>{{user.username}}</li>
+          </ul>
+    </div>
+    
+    <div class="body">
+        <app-add-card class="divCard"></app-add-card>
+        <app-tache class="divCard" *ngFor="let item of taches" [item] ="item"></app-tache>
+        
+    </div>
+    <div class="left_side"></div>
+</div>
+

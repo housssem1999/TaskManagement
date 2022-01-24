@@ -1,0 +1,56 @@
+<div class="card" style="width: 100%; margin-top: 10px;">
+  <h5><img src="../../assets/img/profile.png" class="card-img-top" style="width: 10%;">{{item.titre}} </h5>
+  <div class="card-body" *ngIf="!formisopen">
+    
+    <h5 class="card-title">{{item.titre}} </h5>
+    <p class="card-text">{{item.date_fin}}</p>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">{{item.description}}</li>
+
+    </ul>
+  </div>
+
+  <div class="card-body">
+    <div *ngIf="test">
+      <button type="button" class="btn btn-outline-primary" (click)="onEdit()">Modifier</button>
+      <button type="button" class="btn btn-outline-primary" *ngIf="!formisopen" (click)="onDelete()">Supprimer</button>
+    </div>
+
+    <div *ngIf="formisopen" >
+      <formedit [items]='item' [option]="'update'"></formedit>
+    </div>
+
+  </div>
+  <button type="button" class="btn btn-outline-primary"  (click)="onCom()">Commentaire</button>
+  <div *ngIf="commentaireOpen">
+    <form [formGroup]="formCom" (ngSubmit)="onComment()">
+      <label for="exampleInputEmail1" class="form-label">Commentaire</label>
+      <input type="text"  formControlName="body"class="form-control" placeholder="Entrez vote commentaire" required>
+      <button type="button" class="btn btn-outline-primary"(click)="cancel()">Cancel</button>
+    </form>
+  </div>
+  <div class="md-flex" *ngIf="item.com">
+    <ul >
+      <li class="list-group-item"  *ngFor="let i of item.com">
+        <div class="d-md-flex justify-content-md-start" >
+          <p class="card-text" ><small class="text-muted">{{i.body}}</small></p>
+        </div>
+        <div class="d-md-flex justify-content-md-end" *ngIf="testCom(i.id_user)">
+          <button class="btn btn me-md" (click)="DeleteCom(i.id_com)" >
+            <img width="30" src="../../assets/img/delete.png" >
+          </button>
+          <button class="btn btn" (click)="onUpdate()">
+            <img width="27" src="../../assets/img/update.png">
+          </button>
+          <div *ngIf="commenUpdateOpen">
+            <form [formGroup]="formComUpdate" (ngSubmit)="UpdateCom(i.id_com)">
+              <label for="exampleInputEmail1" class="form-label">Commentaire</label>
+              <input type="text"  formControlName="body" class="form-control" placeholder="Modifiez vote commentaire" required>
+              <button type="button" class="btn btn-outline-primary"(click)="cancel()">Cancel</button>
+            </form>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
