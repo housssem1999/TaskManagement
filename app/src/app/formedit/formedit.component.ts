@@ -1,5 +1,6 @@
+import { NodeWithI18n } from '@angular/compiler';
 import { convertUpdateArguments } from '@angular/compiler/src/compiler_util/expression_converter';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TacheService } from '../services/tache.service';
 import { UserService } from '../services/user.service';
@@ -12,10 +13,10 @@ import { UserService } from '../services/user.service';
 export class FormeditComponent implements OnInit {
 @Input () items: any;
 @Input () option: String;
-
-  formisopen: boolean = false
+  modifieisopen: boolean = true
   key = JSON.parse(sessionStorage.getItem('USER_KEY'))['username']
-  now = new Date(Date.now())
+  now_incorrect = new Date(Date.now())
+  now = this.now_incorrect.getFullYear() + '-' + this.now_incorrect.getMonth() +'-'+this.now_incorrect.getDay()
   form: FormGroup;
   titre: FormControl;
   description: FormControl;
@@ -55,21 +56,19 @@ createForm() {
   })
 }
 
-onEdit(){
-  this.formisopen = true
-}
 submit(){
-  if(this.option== "update"){
+  if(this.option == "update"){
+    console.log("d5il lil updte")
     this.update()
   }
-  if(this.option== "add"){
+  if(this.option == "add"){
     this.add()
   }
 }
 
 cancel(){
   this.form.reset()
-  this.formisopen = false
+  this.modifieisopen = false
 }
   update(){
     this.tacheService.update_tache(this.items.id,this.form.value)
@@ -83,6 +82,7 @@ cancel(){
   .subscribe(data =>{
     window.location.reload();
   },err =>{
+    console.log(err)
   })
   }
 }

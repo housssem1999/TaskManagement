@@ -7,7 +7,7 @@ var bodyParser = require('body-parser')
 const db = mysql.createConnection({
     host:'localhost',
     user:'root',
-    password:'',
+    password:'12345678',
     database: 'blog'
 })
 db.connect()
@@ -102,7 +102,7 @@ app.post('/create', async (req, res)=>{
          req.body.categorie,
          req.body.proprietaire
     ]
-    const sql = "insert into tache (titre, description, date_fin, priorite, etat, categorie, proprietaire) values (?)"
+    const sql = "insert into tache (titre, description, date, priorite, etat, categorie, proprietaire) values (?)"
     const create = await db.query(sql, [objet_Tache], (err)=>{
         if(err){
             throw err

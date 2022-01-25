@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { TacheService } from '../services/tache.service';
 import { CommentaireService } from '../services/commentaire.service';
 import { UserService } from '../services/user.service';
@@ -11,6 +11,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class TacheComponent implements OnInit {
   @Input () item: any;
+
   formisopen: boolean = false
   commentaireOpen: boolean = false
   commenUpdateOpen: boolean = false
@@ -19,6 +20,9 @@ export class TacheComponent implements OnInit {
   formComUpdate: FormGroup;
   body: FormControl;
   date: FormControl;
+  now_incorrect = new Date(Date.now())
+  now = this.now_incorrect.getFullYear() + '-' + this.now_incorrect.getMonth() +'-'+this.now_incorrect.getDay()
+
   commentService: any;
   comments: any;
   test: boolean = false
@@ -35,13 +39,13 @@ ngOnInit(): void {
 }
 createFormControls() {
   this.body = new FormControl('', Validators.required);
-  this.date = new FormControl(new Date(Date.now()));
+  this.date = new FormControl(this.now);
 }
 
 createForm() {
   this.formCom= new FormGroup({
     body: this.body,  
-    date_fin: this.date
+    date: this.date
   })
 }
 createFormUpdate() {
@@ -52,7 +56,7 @@ createFormUpdate() {
 }
 
 onEdit(){
-    this.formisopen = true
+    this.formisopen = !this.formisopen
   }
 
 testDelete (){

@@ -1,5 +1,5 @@
 <div class="card" style="width: 100%; margin-top: 10px;">
-  <h5><img src="../../assets/img/profile.png" class="card-img-top" style="width: 10%;">{{item.titre}} </h5>
+  <h5><img src="../../assets/img/profile.png" class="card-img-top" style="width: 10%;">{{item.proprietaire}} </h5>
   <div class="card-body" *ngIf="!formisopen">
     
     <h5 class="card-title">{{item.titre}} </h5>
@@ -13,7 +13,7 @@
   <div class="card-body">
     <div *ngIf="test">
       <button type="button" class="btn btn-outline-primary" (click)="onEdit()">Modifier</button>
-      <button type="button" class="btn btn-outline-primary" *ngIf="!formisopen" (click)="onDelete()">Supprimer</button>
+      <button type="button" class="btn btn-outline-primary" (click)="onDelete()">Supprimer</button>
     </div>
 
     <div *ngIf="formisopen" >

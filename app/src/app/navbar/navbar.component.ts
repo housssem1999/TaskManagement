@@ -9,7 +9,7 @@ import { TacheService } from '../services/tache.service';
 
 export class NavbarComponent implements OnInit {
   @Input () isLoggedIn: boolean = false;
-  username?: any;
+  user: any;
   active="home";
   tache:any
 
@@ -19,7 +19,7 @@ export class NavbarComponent implements OnInit {
     this.isLoggedIn = !!window.sessionStorage.getItem('USER_KEY');
 
     if (this.isLoggedIn) {
-      const user = window.sessionStorage.getItem('USER_KEY');
+      this.user = JSON.parse(window.sessionStorage.getItem('USER_KEY'));
     }
   
   }
