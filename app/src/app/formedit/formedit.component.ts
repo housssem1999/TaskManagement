@@ -1,6 +1,4 @@
-import { NodeWithI18n } from '@angular/compiler';
-import { convertUpdateArguments } from '@angular/compiler/src/compiler_util/expression_converter';
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TacheService } from '../services/tache.service';
 import { UserService } from '../services/user.service';
@@ -16,7 +14,7 @@ export class FormeditComponent implements OnInit {
   modifieisopen: boolean = true
   key = JSON.parse(sessionStorage.getItem('USER_KEY'))['username']
   now_incorrect = new Date(Date.now())
-  now = this.now_incorrect.getFullYear() + '-' + this.now_incorrect.getMonth() +'-'+this.now_incorrect.getDay()
+  now = this.now_incorrect.getFullYear() + '-' + (this.now_incorrect.getMonth()) +'-'+ this.now_incorrect.getDate()
   form: FormGroup;
   titre: FormControl;
   description: FormControl;
@@ -25,6 +23,7 @@ export class FormeditComponent implements OnInit {
   categorie: FormControl;
   etat: FormControl;
   proprietaire: FormControl;
+  document: FormControl;
 
   constructor(private tacheService: TacheService, private UserService: UserService){}
 
@@ -41,6 +40,7 @@ export class FormeditComponent implements OnInit {
   this.priorite = new FormControl('', Validators.required);
   this.categorie = new FormControl('', Validators.required)
   this.etat = new FormControl('', Validators.required);
+  this.document = new FormControl(null, Validators.required);
   this.proprietaire = new FormControl(this.key);
 }
 
@@ -52,7 +52,8 @@ createForm() {
     priorite: this.priorite,
     categorie: this.categorie,
     etat: this.etat,
-    proprietaire: this.proprietaire
+    proprietaire: this.proprietaire,
+    document: this.document
   })
 }
 
@@ -77,12 +78,36 @@ cancel(){
     },err =>{
       console.log(err)
 })}
+
   add(){
-  this.tacheService.create_tache(this.form.value)
-  .subscribe(data =>{
-    window.location.reload();
-  },err =>{
-    console.log(err)
-  })
+    const formData = new FormData();
+    formData.append('titre', this.form.get('titre')?.value)
+    formData.append('description', this.form.get('description')?.value)
+    formData.append('etat', this.form.get('etat')?.value)
+    formData.append('categorie', this.form.get('categorie')?.value)
+    formData.append('date', this.form.get('date')?.value)
+    formData.append('priorite', this.form.get('priorite')?.value)
+    formData.append('proprietaire', this.form.get('proprietaire')?.value)
+    formData.append('document', this.form.get('document')?.value)
+
+    this.tacheService.create_tache(formData)
+    .subscribe(data =>{
+      window.location.reload();
+    },err =>{
+      console.log(err)
+    })
+  }
+  get f(){
+    return this.form.controls;
+  }
+     
+  onFileChange(event:any) {
+  
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.form.patchValue({
+        document: file
+      });
+    }
   }
 }

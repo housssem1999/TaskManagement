@@ -2,6 +2,7 @@ const express = require('express')
 const mysql = require('mysql')
 var session = require('express-session')
 const cors = require("cors")
+const multer = require('multer')
 
 var bodyParser = require('body-parser')
 const db = mysql.createConnection({
@@ -31,6 +32,21 @@ app.use(cors(corsOptions));
 app.listen(3000, ()=>{
     console.log('listenning to port 3000')
 })
+
+
+let storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, './uploads');
+    },
+    filename: (req, file, cb) => {
+      cb(null, file.originalname)
+    }
+  });
+  
+  let upload = multer({
+    storage: storage
+  });
+
 
 app.get('/createDB',(req, res)=>{
      let sql ='create database blog'
@@ -92,24 +108,30 @@ app.post('/users/login',async (req, res)=>{
 })
 })
 
-app.post('/create', async (req, res)=>{
-    var objet_Tache =[
-         req.body.titre,
-         req.body.description,
-         req.body.date,
-         req.body.priorite,
-         req.body.etat,
-         req.body.categorie,
-         req.body.proprietaire
-    ]
-    const sql = "insert into tache (titre, description, date, priorite, etat, categorie, proprietaire) values (?)"
-    const create = await db.query(sql, [objet_Tache], (err)=>{
-        if(err){
-            throw err
+app.post('/create', upload.single('document'), async (req, res)=>{
+        if (!req.file) {
+            return res.send({
+              success: false
+            });
+        }else {
+            var objet_Tache =[
+                req.body.titre,
+                req.body.description,
+                req.body.date,
+                req.body.priorite,
+                req.body.etat,
+                req.body.categorie,
+                req.body.proprietaire,
+                req.file.path
+           ]
+           const sql = "insert into tache (titre, description, date, priorite, etat, categorie, proprietaire, document) values (?)"
+           const create = await db.query(sql, [objet_Tache], (err)=>{
+               if(err){
+                   throw err
+               }
+            res.send({success: true, objet: objet_Tache})
+          })
         }
-        res.send(objet_Tache)
-    })
-
 })
 app.delete('/delete/:id',async (req, res)=>{
     var id = req.params.id
@@ -173,7 +195,7 @@ app.get(`/search`,async (req,res)=>{
 })
 //___________comments___________//
 
-app.get('/get_comments', async(req, res)=>{
+app.get('/get_comments', upload.single('document'), async(req, res)=>{
 
     var objet_comment =[
         req.params.id_user,

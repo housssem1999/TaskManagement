@@ -19,6 +19,10 @@
         <label for="exampleInputEmail1" class="form-label">Categorie</label>
         <input type="text" class="form-control" formControlName="categorie"placeholder="categorie" required><br>
     </div>
-    <button type="submit" [disabled]="!form.valid" class="btn btn-outline-primary" >Submit</button>
+    <div class="mb-3">
+            <label class="form-label">Select your profile picture:</label>
+            <input type="file" name="document" formControlName="document" (change)="onFileChange($event)">
+    </div>
+    <button type="submit" class="btn btn-outline-primary" >Submit</button>
     <button type="button" class="btn btn-outline-primary"(click)="cancel()">Cancel</button>
   </form>

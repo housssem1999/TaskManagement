@@ -2,11 +2,13 @@
   <h5><img src="../../assets/img/profile.png" class="card-img-top" style="width: 10%;">{{item.proprietaire}} </h5>
   <div class="card-body" *ngIf="!formisopen">
     
-    <h5 class="card-title">{{item.titre}} </h5>
-    <p class="card-text">{{item.date_fin}}</p>
+    <h3 class="card-title">{{item.titre}} </h3><br>
     <ul class="list-group list-group-flush">
-      <li class="list-group-item">{{item.description}}</li>
-
+      <li class="list-group-item"><h5>Description: {{item.description}}</h5></li>
+      <li class="list-group-item"><h5>Etat: {{item.etat}}</h5></li>
+      <li class="list-group-item"><h5>Categorie: {{item.categorie}}</h5></li>
+      <li class="list-group-item"><h5>priorite: {{item.priorite}}</h5></li>
+      <li class="list-group-item"><h5>Date: {{item.date}}</h5></li>
     </ul>
   </div>
 
@@ -33,7 +35,7 @@
     <ul >
       <li class="list-group-item"  *ngFor="let i of item.com">
         <div class="d-md-flex justify-content-md-start" >
-          <p class="card-text" ><small class="text-muted">{{i.body}}</small></p>
+          <p class="card-text" ><small class="text-muted">{{i.body}}<small *ngIf="i.modifie" class="text-muted">(modifie {{i.date}})</small> </small></p>
         </div>
         <div class="d-md-flex justify-content-md-end" *ngIf="testCom(i.id_user)">
           <button class="btn btn me-md" (click)="DeleteCom(i.id_com)" >

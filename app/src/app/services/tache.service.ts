@@ -26,5 +26,5 @@ export class TacheService {
   }
   get_tache_from_searchbar(titre: any){
     return this.http.get(API + 'search' + '?titre=' + titre)
-  }  
+  }
 }

@@ -11,7 +11,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class TacheComponent implements OnInit {
   @Input () item: any;
-
   formisopen: boolean = false
   commentaireOpen: boolean = false
   commenUpdateOpen: boolean = false
@@ -36,6 +35,7 @@ ngOnInit(): void {
   this.createFormControls()
   this.createForm()
   this.test = this.testDelete()
+
 }
 createFormControls() {
   this.body = new FormControl('', Validators.required);
